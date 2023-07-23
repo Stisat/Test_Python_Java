@@ -49,6 +49,7 @@ public class ToyShop {
                     break;
                 case "3":
                     addToy(listToys);
+                    printToys(listToys);
                     break;
                 case "0":
                     System.out.println("Завершение работы приложения.");
