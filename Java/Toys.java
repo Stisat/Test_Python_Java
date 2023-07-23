@@ -1,15 +1,15 @@
-package TestPythonJava.Java;
+package JavaTest;
 
 import java.util.Objects;
-import java.util.Random;
+
 
 public class Toys {
 
-    static Random random = new Random();
+
     /**
      * номер id игрушки
      */
-    private int id;
+    private final int id;
 
     /**
      * поле название игрушки
@@ -39,10 +39,6 @@ public class Toys {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getToysName() {
         return toysName;
     }
@@ -64,17 +60,18 @@ public class Toys {
 
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Toys toys = (Toys) o;
-        return id == toys.id && weight == toys.weight && Objects.equals(toysName, toys.toysName);
+        return id == toys.id  && Objects.equals(toysName, toys.toysName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, toysName, weight);
+        return Objects.hash(id, toysName);
     }
 
     @Override

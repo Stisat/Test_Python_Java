@@ -1,4 +1,4 @@
-package TestPythonJava.Java;
+package JavaTest;
 
 
 import java.util.*;
@@ -33,25 +33,29 @@ public class ToyShop {
             System.out.println("Структура приложения:");
             System.out.println("1 - 'Отобразить игрушки в магазине';");
             System.out.println("2 - 'Произвести розыгрыш';");
+            System.out.println("3 - 'Добавление игрушки';");
             System.out.println("0 - Выход из приложения.");
             System.out.println("###########################################################");
             System.out.print("Ваш выбор: ");
-            int task = Integer.parseInt(scan.nextLine());
+            String task = scan.nextLine();
             switch (task) {
-                case 1:
+                case "1":
                     printToys(listToys);
                     break;
-                case 2:
+                case "2":
                     Queue<Toys> getT= getToys(listToys);
                     winToy(getT,listToys);
                     addFile(getT);
                     break;
-                case 0:
+                case "3":
+                    addToy(listToys);
+                    break;
+                case "0":
                     System.out.println("Завершение работы приложения.");
                     check = false;
                     break;
                 default:
-                    System.out.println("Вы указали некорректный номер действия.\n Повторите попытку.");
+                    System.out.println("Вы указали некорректное действие.\n Повторите попытку.");
                     break;
             }
         }
@@ -95,6 +99,7 @@ public class ToyShop {
                     priotityQueue.add(elem);
                 }
             }
+
         return priotityQueue;
     }
 
@@ -107,21 +112,20 @@ public class ToyShop {
         }
        Iterator<Toys> iterator = data.iterator();
        while (iterator.hasNext()){
-           Toys temp = data.remove();
+           Toys temp = data.poll();
            for (Toys elem: toysList) {
-               if(temp.equals(elem)){
-                   if(elem.getCount()>0){
-                       elem.setCount(elem.getCount()-1);
-
-                   }
-                   else  {
-                       toysList.remove(elem);
-                       return toysList;
-                   }
-
-               }
-
+                assert temp != null;
+                if (temp.equals(elem)) {
+                    if (elem.getCount() > 0) {
+                        elem.setCount(elem.getCount() - 1);
+                    }
+                    else {
+                        toysList.remove(elem);
+                        return toysList;
+                    }
+                }
            }
+
 
        }
        return toysList;
@@ -148,8 +152,35 @@ public class ToyShop {
     }
     static void printToys(ArrayList<Toys> data){
         for (Toys element: data) {
+            if (data.isEmpty()){
+                System.out.println("В магазине к сожалению больше нет игрушек");
+                break;
+            }
             System.out.printf("id: %d; name:%s; count:%d\n",element.getId(),element.getToysName(),element.getCount());
         }
+    }
+    static void addToy(ArrayList<Toys> data){
+        int id= data.size();
+        System.out.println("Введите наименование игрушки");
+        String toysName = scan.nextLine();
+        System.out.println("Введите количество игрушек");
+        int count = Integer.parseInt(scan.nextLine());
+        System.out.println("Введите вес игрушки от 1 до 100");
+        int weight = Integer.parseInt(scan.nextLine());
+
+        for (Toys elem: data) {
+            if (toysName.equals(elem.getToysName())){
+                elem.setCount(elem.getCount()+count);
+                break;
+            }
+            else if (id== elem.getId()){
+                id= elem.getId()+1;
+                data.add(new Toys(id, toysName, count, weight));
+                break;
+
+            }
+        }
+
     }
 
 
